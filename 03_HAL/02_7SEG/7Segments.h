@@ -63,6 +63,8 @@
  /*-------------------------------------------------------*API'S*---------------------------------------------------------*/
   Se7enSeg_enuErorState Se7enSeg_Init(void);
   Se7enSeg_enuErorState Se7enSeg_SetValueSingle(u8 Copy_u8Se7enSegName , u8 Copy_u8Value);
+  Se7enSeg_enuErorState Se7enSeg_SetValueALL(u32 Copy_u8Value);
+  
    
  
  

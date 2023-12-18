@@ -34,8 +34,9 @@
 	   	[Se7enSeg_LEDF] = {Se7enSeg_PORTB , Se7enSeg_PIN5,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
 	   	[Se7enSeg_LEDG] = {Se7enSeg_PORTB , Se7enSeg_PIN6,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
 	      
-   }
-	 
+   },
+    
+  
  };
  u8 Se7enSeg_u8ValuesArr[10][7]=
  {
