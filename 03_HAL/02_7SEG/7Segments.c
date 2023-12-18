@@ -18,7 +18,7 @@ Se7enSeg_enuErorState Se7enSeg_Init(void) {
   u8 LocU8Counter;
   u8 LocU8Counter1;
 
-	for (LocU8Counter = 0; LocU8Counter < NUM_OF_Se7enSeg; LocU8Counter++) 
+	for (LocU8Counter = 0; LocU8Counter < NUM_OF_Se7enSeg ; LocU8Counter++) 
 	{
 		for (LocU8Counter1 = 0; LocU8Counter1 < 7; LocU8Counter1++)
 		 { 

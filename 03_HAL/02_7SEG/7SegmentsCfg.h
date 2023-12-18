@@ -10,7 +10,7 @@
  #define S7evenCfg_H_
  #include "./lib/std_types.h"
 
-#define NUM_OF_Se7enSeg  2
+#define NUM_OF_Se7enSeg  4
 /*
 use this macro to add the number of Se7enSeg you want 
 note that the maximum number is 4 
