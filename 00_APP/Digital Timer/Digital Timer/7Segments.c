@@ -6,7 +6,6 @@
  * Date             :       18/12/2023  
  * Last Update      :       18/12/2023                                            */
 #include "7Segments.h"
-#include "7Segments.h"
 
 extern Se7enSegLED_StrCfg_t Se7venSegmentsArr[NUM_OF_Se7enSeg][7];
 extern u8 Se7enSeg_u8ValuesArr[10][7];

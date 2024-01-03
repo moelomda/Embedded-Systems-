@@ -12,7 +12,7 @@
  #include "DIO.h"
  #include "7SegmentsCfg.h"
  #include "PORT_Config.h"
- #include "lib/delay.h"
+ #include "../../../03_Lib/delay.h"
  
  /*--------------------------------------------------------*MACRO*-------------------------------------------------------------*/
  /* Active State */

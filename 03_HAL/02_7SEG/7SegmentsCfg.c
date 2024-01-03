@@ -26,16 +26,38 @@
 	
    [Se7enSeg_NO_ONE]=
    {
-	   	[Se7enSeg_LEDA] = {Se7enSeg_PORTB, Se7enSeg_PIN0 ,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
-	   	[Se7enSeg_LEDB] = {Se7enSeg_PORTB , Se7enSeg_PIN1 ,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
-	   	[Se7enSeg_LEDC] = {Se7enSeg_PORTB , Se7enSeg_PIN2 ,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
-	   	[Se7enSeg_LEDD] = {Se7enSeg_PORTB , Se7enSeg_PIN3,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
-	   	[Se7enSeg_LEDE] = {Se7enSeg_PORTB , Se7enSeg_PIN4,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
-	   	[Se7enSeg_LEDF] = {Se7enSeg_PORTB , Se7enSeg_PIN5,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
-	   	[Se7enSeg_LEDG] = {Se7enSeg_PORTB , Se7enSeg_PIN6,ACTIVE_HIGH ,Se7enSegLed_OFF_STATE},
+	   	[Se7enSeg_LEDA] = {Se7enSeg_PORTB, Se7enSeg_PIN0 ,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	   	[Se7enSeg_LEDB] = {Se7enSeg_PORTB , Se7enSeg_PIN1 ,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	   	[Se7enSeg_LEDC] = {Se7enSeg_PORTB , Se7enSeg_PIN2 ,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	   	[Se7enSeg_LEDD] = {Se7enSeg_PORTB , Se7enSeg_PIN3,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	   	[Se7enSeg_LEDE] = {Se7enSeg_PORTB , Se7enSeg_PIN4,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	   	[Se7enSeg_LEDF] = {Se7enSeg_PORTB , Se7enSeg_PIN5,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	   	[Se7enSeg_LEDG] = {Se7enSeg_PORTB, Se7enSeg_PIN6,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
 	      
-   }
-	 
+   },
+    [Se7enSeg_NO_TWO]=
+    {
+	    [Se7enSeg_LEDA] = {Se7enSeg_PORTC, Se7enSeg_PIN0 ,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    [Se7enSeg_LEDB] = {Se7enSeg_PORTC , Se7enSeg_PIN1 ,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    [Se7enSeg_LEDC] = {Se7enSeg_PORTC , Se7enSeg_PIN2 ,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    [Se7enSeg_LEDD] = {Se7enSeg_PORTC , Se7enSeg_PIN3,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    [Se7enSeg_LEDE] = {Se7enSeg_PORTC , Se7enSeg_PIN4,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    [Se7enSeg_LEDF] = {Se7enSeg_PORTC , Se7enSeg_PIN5,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    [Se7enSeg_LEDG] = {Se7enSeg_PORTC, Se7enSeg_PIN6,ACTIVE_HIGH ,Se7enSegLed_ON_STATE},
+	    
+    },
+	[Se7enSeg_NO_THREE]=
+	{
+		[Se7enSeg_LEDA] = {Se7enSeg_PORTD, Se7enSeg_PIN0 ,ACTIVE_LOW ,Se7enSegLed_OFF_STATE},
+		[Se7enSeg_LEDB] = {Se7enSeg_PORTD , Se7enSeg_PIN1 ,ACTIVE_LOW ,Se7enSegLed_ON_STATE},
+		[Se7enSeg_LEDC] = {Se7enSeg_PORTD , Se7enSeg_PIN2 ,ACTIVE_LOW ,Se7enSegLed_ON_STATE},
+		[Se7enSeg_LEDD] = {Se7enSeg_PORTD , Se7enSeg_PIN3,ACTIVE_LOW ,Se7enSegLed_OFF_STATE},
+		[Se7enSeg_LEDE] = {Se7enSeg_PORTD , Se7enSeg_PIN4,ACTIVE_LOW ,Se7enSegLed_OFF_STATE},
+		[Se7enSeg_LEDF] = {Se7enSeg_PORTD , Se7enSeg_PIN5,ACTIVE_LOW,Se7enSegLed_OFF_STATE},
+		[Se7enSeg_LEDG] = {Se7enSeg_PORTD, Se7enSeg_PIN6,ACTIVE_LOW ,Se7enSegLed_OFF_STATE},
+		
+	},
+
  };
  u8 Se7enSeg_u8ValuesArr[10][7]=
  {
