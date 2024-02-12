@@ -473,7 +473,7 @@ typedef enum
   *   - 'Copy_u8ClkState' parameter sets the desired state of the clock (ON or OFF).
   ******************************************************************************
   */
-Rcc_ErrorStatus_t Rcc_SetClkOnOff(u8 Copy_u8ClkName, u8 Copy_u8ClkState);
+Rcc_ErrorStatus_t Rcc_SetClkOnOff(u32 Copy_u32ClkName, u8 Copy_u8ClkState);
 /**
   ******************************************************************************
   * @brief  Sets the system clock to the specified clock source.
@@ -499,7 +499,7 @@ Rcc_ErrorStatus_t Rcc_SetClkOnOff(u8 Copy_u8ClkName, u8 Copy_u8ClkState);
   ******************************************************************************
   */
 
-Rcc_ErrorStatus_t Rcc_SetSysClk(u8 Copy_u8ClkName);
+Rcc_ErrorStatus_t Rcc_SetSysClk(u32 Copy_u32ClkName);
 /**
   ******************************************************************************
   * @brief  Enables or disables a peripheral.
@@ -525,7 +525,7 @@ Rcc_ErrorStatus_t Rcc_SetSysClk(u8 Copy_u8ClkName);
   */
 
 
-Rcc_ErrorStatus_t Rcc_SetPeripheralOnOff(u8 Copy_u8Name , u8 Copy_u8State );
+Rcc_ErrorStatus_t Rcc_SetPeripheralOnOff(u32 Copy_u32Name , u8 Copy_u8State );
 
 /**
   ******************************************************************************
@@ -575,6 +575,5 @@ Rcc_ErrorStatus_t Rcc_SetPreScaler(u8 Copy_u8Name , u8 Copy_u8Value);
   *     on the chosen PLL clock source (HSE or HSI).
   ******************************************************************************
   */
-Rcc_ErrorStatus_t Rcc_SetPLLCfg(u8 copy_u8ClkSrc, u8 Copy_u8_MValue, u8 Copy_u8_NValue, u8 Copy_u8_PValue);
-
+Rcc_ErrorStatus_t Rcc_SetPLLCfg   (u32 copy_u32ClkSrc  , u32 CopyMValue , u32 CopyNValue , u32 CopyPValue);
 

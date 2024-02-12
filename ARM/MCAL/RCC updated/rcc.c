@@ -75,33 +75,33 @@ typedef struct
 #define RCC    ((Rcc_tstrRegisterType* )(RCC_u32BASEADDRESS))
 
 
- Rcc_ErrorStatus_t Rcc_SetClkOnOff(u8 Copy_u8ClkName, u8 Copy_u8ClkState)
+ Rcc_ErrorStatus_t Rcc_SetClkOnOff(u32 Copy_u32ClkName, u8 Copy_u8ClkState)
  {
 	 u8 loc_u8ErrorStatus = Rcc_enuSucceded ;
-	 u8 loc_TempVar = 0 ;
 
+      u32 loc_TempVar ;
 	 switch (Copy_u8ClkState)
 	 {
 	 case CLK_ON :
-        RCC->CR |= Copy_u8ClkName ;
+        RCC->CR |=Copy_u32ClkName ;
         break ;
 	 case CLK_OFF:
-		 u8 loc_TempVar = RCC->CFGR  ;
+		  loc_TempVar = RCC->CFGR ;
          loc_TempVar &= ~SWS_MASK   ;
-         if((Copy_u8ClkName == SYSCLK_HSI && loc_TempVar == SWS_HSI) || (Copy_u8ClkName == SYSCLK_HSE && loc_TempVar == SWS_HSE)
-        		 || (Copy_u8ClkName == SYSCLK_PLL && loc_TempVar == SWS_PLL)  )
+         if((Copy_u32ClkName == SYSCLK_HSI && loc_TempVar == SWS_HSI) || (Copy_u32ClkName == SYSCLK_HSE && loc_TempVar == SWS_HSE)
+        		 || (Copy_u32ClkName == SYSCLK_PLL && loc_TempVar == SWS_PLL)  )
          {
         	 loc_u8ErrorStatus = Rcc_enuCantCloseClk ;
          }
          else
          {
-        	 RCC->CR &=~Copy_u8ClkName ;
+        	 RCC->CR &=~Copy_u32ClkName ;
          }
 	 }
        return loc_u8ErrorStatus ;
  }
 
- Rcc_ErrorStatus_t Rcc_SetSysClk(u8 Copy_u8ClkName)
+ Rcc_ErrorStatus_t Rcc_SetSysClk(u32 Copy_u32ClkName)
  {
 
 	 // Initialize error status to success
@@ -116,24 +116,24 @@ typedef struct
 	     // Flag indicating if the specified clock is ready
 	     u32 loc_u32Rdyflagraised = 0;
 
-         u8  Loc_u8Rdyflag = 0 ;
+         u32  Loc_u32Rdyflag = 0 ;
 
-         u8 Loc_u8ClkSet = 0 ;
+         u32 Loc_u8ClkSet = 0 ;
 
-         if (Copy_u8ClkName == SYSCLK_HSI)
+         if (Copy_u32ClkName == SYSCLK_HSI)
          {
-        	 Loc_u8Rdyflag = HSI_RDY ;
+        	 Loc_u32Rdyflag = HSI_RDY ;
         	 Loc_u8ClkSet  = HSI_SET ;
          }
-         else if (Copy_u8ClkName == SYSCLK_HSE)
+         else if (Copy_u32ClkName == SYSCLK_HSE)
 		 {
-        	 Loc_u8Rdyflag = HSE_RDY ;
+        	 Loc_u32Rdyflag = HSE_RDY ;
         	 Loc_u8ClkSet  = HSE_SET ;
 		 }
 
-         else if (Copy_u8ClkName == SYSCLK_PLL)
+         else if (Copy_u32ClkName == SYSCLK_PLL)
 		 {
-        	 Loc_u8Rdyflag = PLL_RDY ;
+        	 Loc_u32Rdyflag = PLL_RDY ;
         	 Loc_u8ClkSet  = PLL_SET ;
 		 }
 
@@ -150,10 +150,10 @@ typedef struct
         	             loc_u32temp = RCC->CR;
 
         	             // Mask out the HSI RDY flag
-        	             loc_u32temp &= Loc_u8Rdyflag ;
+        	             loc_u32temp &= Loc_u32Rdyflag ;
 
         	             // Check if HSI is ready
-        	             if (loc_u32temp == Loc_u8Rdyflag)
+        	             if (loc_u32temp == Loc_u32Rdyflag)
         	             {
         	                 loc_u32Rdyflagraised = 1;  // Set ready flag
         	             }
@@ -179,24 +179,24 @@ typedef struct
 	     return loc_u8ErrorStatus;
  }
 
- Rcc_ErrorStatus_t Rcc_SetPeripheralOnOff(u8 Copy_u8Name , u8 Copy_u8State )
+ Rcc_ErrorStatus_t Rcc_SetPeripheralOnOff(u32 Copy_u32Name , u8 Copy_u8State )
  {
 
 	 u8 loc_u8ErrorStatus = Rcc_enuSucceded;
 
-	 u16 loc_u16ConditionAhp1 = (Copy_u8Name == DMA1 || Copy_u8Name == DMA2 || Copy_u8Name == DMA1 || Copy_u8Name == GPIO_A ||
-			 Copy_u8Name == GPIO_B  || Copy_u8Name == GPIO_C || Copy_u8Name == GPIO_D || Copy_u8Name == GPIO_E ||
-			 Copy_u8Name == GPIO_H);
+	 u16 loc_u16ConditionAhp1 = (Copy_u32Name == DMA1 || Copy_u32Name == DMA2 || Copy_u32Name == DMA1 || Copy_u32Name == GPIO_A ||
+			 Copy_u32Name == GPIO_B  || Copy_u32Name == GPIO_C || Copy_u32Name == GPIO_D || Copy_u32Name == GPIO_E ||
+			 Copy_u32Name == GPIO_H);
 
-	 u8 loc_u16ConditionAhp2 = (Copy_u8Name == USB_OTG);
+	 u8 loc_u16ConditionAhp2 = (Copy_u32Name == USB_OTG);
 
-	 u16 loc_u16ConditionAbp1 = (Copy_u8Name == PW_INTF || Copy_u8Name == I2C_1 || Copy_u8Name == I2C_2 || Copy_u8Name == I2C_3 ||
-			 Copy_u8Name == USART2  || Copy_u8Name == SPI_2 || Copy_u8Name == SPI_3 || Copy_u8Name == WINDOW_WD ||
-			 Copy_u8Name == TIM2 || Copy_u8Name == TIM3 || Copy_u8Name == TIM4 || Copy_u8Name == TIM5 );
+	 u16 loc_u16ConditionAbp1 = (Copy_u32Name == PW_INTF || Copy_u32Name == I2C_1 || Copy_u32Name == I2C_2 || Copy_u32Name == I2C_3 ||
+			 Copy_u32Name == USART2  || Copy_u32Name == SPI_2 || Copy_u32Name == SPI_3 || Copy_u32Name == WINDOW_WD ||
+			 Copy_u32Name == TIM2 || Copy_u32Name == TIM3 || Copy_u32Name == TIM4 || Copy_u32Name == TIM5 );
 
-	 u16 loc_u16ConditionAbp2 = (Copy_u8Name == TIM9 || Copy_u8Name == TIM10 || Copy_u8Name == TIM11 || Copy_u8Name == SPI_1 ||
-			 Copy_u8Name == SPI_4  || Copy_u8Name == SYS_CFGCTRL || Copy_u8Name ==  ADC1 || Copy_u8Name == USART1 ||
-			 Copy_u8Name == USART6 || Copy_u8Name == TIM1 );
+	 u16 loc_u16ConditionAbp2 = (Copy_u32Name == TIM9 || Copy_u32Name == TIM10 || Copy_u32Name == TIM11 || Copy_u32Name == SPI_1 ||
+			 Copy_u32Name == SPI_4  || Copy_u32Name == SYS_CFGCTRL || Copy_u32Name ==  ADC1 || Copy_u32Name == USART1 ||
+			 Copy_u32Name == USART6 || Copy_u32Name == TIM1 );
 
 
       switch (Copy_u8State)
@@ -205,19 +205,19 @@ typedef struct
       case CLK_ON :
     	  if(loc_u16ConditionAhp1)
     	  {
-              RCC->AHB1ENR |= Copy_u8Name ;
+              RCC->AHB1ENR |= Copy_u32Name ;
     	  }
     	  else if (loc_u16ConditionAhp2)
     	  {
-    		  RCC->AHB2ENR |= Copy_u8Name ;
+    		  RCC->AHB2ENR |= Copy_u32Name ;
     	  }
     	  else if (loc_u16ConditionAbp1)
     	  {
-    		  RCC->APB1ENR |= Copy_u8Name ;
+    		  RCC->APB1ENR |= Copy_u32Name ;
     	  }
     	  else if (loc_u16ConditionAbp2)
 		  {
-    		  RCC->APB2ENR |= Copy_u8Name ;
+    		  RCC->APB2ENR |= Copy_u32Name ;
 		  }
     	  else
     	  {
@@ -227,19 +227,19 @@ typedef struct
       case CLK_OFF :
          	  if(loc_u16ConditionAhp1)
          	  {
-                  RCC->AHB1ENR &=~Copy_u8Name ;
+                  RCC->AHB1ENR &=~Copy_u32Name ;
          	  }
          	  else if (loc_u16ConditionAhp2)
          	  {
-         		  RCC->AHB2ENR &=~Copy_u8Name ;
+         		  RCC->AHB2ENR &=~Copy_u32Name ;
          	  }
          	  else if (loc_u16ConditionAbp1)
          	  {
-         		  RCC->APB1ENR &=~Copy_u8Name ;
+         		  RCC->APB1ENR &=~Copy_u32Name ;
          	  }
          	  else if (loc_u16ConditionAbp2)
      		  {
-         		  RCC->APB2ENR &=~ Copy_u8Name ;
+         		  RCC->APB2ENR &=~ Copy_u32Name ;
      		  }
          	  else
          	  {
@@ -252,30 +252,30 @@ typedef struct
 
  }
 
- Rcc_ErrorStatus_t Rcc_SetPreScaler(u8 Copy_u8Name , u8 Copy_u8Value)
+ Rcc_ErrorStatus_t Rcc_SetPreScaler(u8 Copy_u32Name , u8 Copy_u8Value)
  {
 	u8 loc_u8ErrorStatus =  Rcc_enuSucceded;
 	u32 loc_u32Temp = RCC->CFGR ;
-	loc_u32Temp &= Copy_u8Name ;
+	loc_u32Temp &= Copy_u32Name ;
 	loc_u32Temp |= Copy_u8Value ;
 	RCC->CFGR =  loc_u32Temp ;
     return loc_u8ErrorStatus;
  }
- Rcc_ErrorStatus_t Rcc_SetPLLCfg   (u8 copy_u8ClkSrc  , u8 Copy_u8_MValue , Copy_u8_NValue , Copy_u8_PValue)
+ Rcc_ErrorStatus_t Rcc_SetPLLCfg   (u32 copy_u32ClkSrc  , u32 CopyMValue , u32 CopyNValue , u32 CopyPValue)
  {
 	 u8 loc_u8ErrorStatus = Rcc_enuSucceded;
      u32 loc_u32Temp = RCC-> CR;
      loc_u32Temp &= SYSCLK_PLL;
-     u8 loc_clksrc = 0 ;
+     u32 loc_clksrc = 0 ;
      if (loc_u32Temp == SYSCLK_PLL)
      {
     	 loc_u8ErrorStatus = Rcc_enuCantCfgPllOn ;
      }
-     else if (copy_u8ClkSrc == SYSCLK_HSE)
+     else if (copy_u32ClkSrc == SYSCLK_HSE)
      {
 	 loc_clksrc = PLL_SRC_HSE ;
      }
-     else if (copy_u8ClkSrc == SYSCLK_HSI)
+     else if (copy_u32ClkSrc == SYSCLK_HSI)
      {
     	 loc_clksrc = PLL_SRC_CLR ;
      }
@@ -288,15 +288,13 @@ typedef struct
        loc_u32Temp &= PLL_SRC_CLR ;
        loc_u32Temp |=loc_clksrc;
        loc_u32Temp &= PLL_M_CLR ;
-       loc_u32Temp |=Copy_u8_MValue;
+       loc_u32Temp |=CopyMValue;
        loc_u32Temp &= PLL_N_CLR ;
-       loc_u32Temp |=Copy_u8_NValue;
+       loc_u32Temp |=CopyNValue;
        loc_u32Temp &= PLL_P_CLR ;
-       loc_u32Temp |=Copy_u8_PValue;
+       loc_u32Temp |=CopyPValue;
        RCC-> PLLCFGR =loc_u32Temp ;
+
 
       return loc_u8ErrorStatus ;
 }
-
-
-
