@@ -14,7 +14,6 @@
   * GPIO pins for various applications.
   ******************************************************************************
   */
-
 #ifndef GPIO_H_
 #define GPIO_H_
 #include "std_types.h"
@@ -76,15 +75,9 @@
 #define GPIO_AFR_AF13   0x0000000D   // Alternate function 13
 #define GPIO_AFR_AF14   0x0000000E   // Alternate function 14
 #define GPIO_AFR_AF15   0x0000000F   // Alternate function 15
-
-
-
-
-
-
-
-
-
+/*-----------------------------------------------------------*Pin Value*------------------------------------------------------------------*/
+#define LOGIC_HIGH   1
+#define LOGIC_LOW    0
 
 typedef struct
 {
@@ -105,41 +98,37 @@ typedef enum
 	GPIO_enuInvalidMode,
 	GPIO_enuInvalidAF,
 	GPIO_enuInvalidSpeed,
+	GPIO_enuNullPtr,
     GPIO_NOK
 } GPIO_ErrorStatus_t;
-
 
 
 /**
   * @brief  Initializes a GPIO pin.
   * @param  Copy_StrData: Structure containing the GPIO pin configuration.
   * @retval GPIO_ErrorStatus_t: Indicates the status of the GPIO initialization.
-  *                               - GPIO_OK: GPIO pin initialized successfully.
-  *                               - GPIO_ERROR: Error occurred during GPIO initialization.
   */
 GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t Copy_StrData);
 
 /**
   * @brief  Sets the value of a GPIO pin.
-  * @param  Copy_PortName: The name of the GPIO port (e.g., GPIOA, GPIOB, etc.).
-  * @param  Copy_PinName: The pin number within the GPIO port.
+  * @param  Copy_PortNum: The index of the GPIO port (e.g., PORT_A, PORT_B, etc.).
+  * @param  Copy_PinNum: The pin number within the GPIO port.
   * @param  Copy_PinValue: The value to set for the GPIO pin (0 or 1).
   * @retval GPIO_ErrorStatus_t: Indicates the status of the GPIO pin value setting.
-  *                               - GPIO_OK: GPIO pin value set successfully.
-  *                               - GPIO_ERROR: Error occurred during setting GPIO pin value.
+
   */
-GPIO_ErrorStatus_t GPIO_SetPinValue(u32 Copy_PortName, u32 Copy_PinNum, u32 Copy_PinValue);
+GPIO_ErrorStatus_t GPIO_SetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 Copy_PinValue);
 
 /**
   * @brief  Gets the value of a GPIO pin.
-  * @param  Copy_PortName: The name of the GPIO port (e.g., GPIOA, GPIOB, etc.).
-  * @param  Copy_PinName: The pin number within the GPIO port.
+  * @param  Copy_PortNum: The index of the GPIO port (e.g., PORT_A, PORT_B, etc.).
+  * @param  Copy_PinNum: The pin number within the GPIO port.
   * @param  Add_PinValue: Pointer to a variable to store the pin value.
   * @retval GPIO_ErrorStatus_t: Indicates the status of the GPIO pin value reading.
-  *                               - GPIO_OK: GPIO pin value read successfully.
-  *                               - GPIO_ERROR: Error occurred during reading GPIO pin value.
+  *
   */
-GPIO_ErrorStatus_t GPIO_GetPinValue(u32 Copy_PortName, u32 Copy_PinNum, u32 *Add_PinValue);
+GPIO_ErrorStatus_t GPIO_GetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 *Add_PinValue);
 
 
 #endif /* GPIO_H_ */

@@ -1,9 +1,19 @@
-/*
- * GPIO.c
- *
- *  Created on: ???/???/????
- *      Author: Mohamed Elomda
- */
+/**
+  ******************************************************************************
+  * @file    gpio.c
+  * @brief   GPIO driver implementation for STM32F401 microcontroller
+  ******************************************************************************
+  * @author   Mohamed Ahmed Fouad
+  * @date     2024-02-13
+  ******************************************************************************
+  * @details
+  * This file contains the implementation of the GPIO driver for the STM32F401
+  * microcontroller. It provides functions to initialize GPIO pins, set or clear
+  * specific pins, read pin states, and deinitialize GPIO peripherals. The driver
+  * is designed to work with the STM32F401 series of microcontrollers and offers
+  * an easy-to-use interface for controlling GPIO pins for various applications.
+  ******************************************************************************
+  */
 #include "GPIO.h"
 #define NUM_PORTS 6
 #define	NULL	(void*)0
@@ -34,14 +44,9 @@ typedef struct
 
 }Gpio_strRegister;
 
-
-
 volatile Gpio_strRegister * const GPIO[NUM_PORTS] = {GPIOA ,GPIOB ,GPIOC ,GPIOD,GPIOE,GPIOH};
-
-
 GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t Copy_StrData)
 {
-    // Local variables initialization
     u8 Loc_ErrorStatus = GPIO_OK;
     u32 Loc_PinDirec = Copy_StrData.GPIO_Direction;
     u32 Loc_PinMode = Copy_StrData.GPIO_Mode;
@@ -49,22 +54,19 @@ GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t Copy_StrData)
     u32 Loc_PinNum = Copy_StrData.GPIO_Pin;
     u32 Loc_Temp = GPIO[Copy_StrData.GPIO_Port]->Moder;
 
-    // Check if the GPIO port number is valid
     if (Copy_StrData.GPIO_Port > NUM_PORTS - 1 )
     {
         Loc_ErrorStatus = GPIO_enuInvalidPortNum;
     }
-    // Check if the GPIO pin number is valid
+
     else if (Copy_StrData.GPIO_Pin > GPIO_PIN_15 )
     {
         Loc_ErrorStatus = GPIO_enuInvalidPinNum;
     }
-    // Check if the GPIO pin direction is valid
     else if (Copy_StrData.GPIO_Direction > GPIO_MODE_ANALOG )
     {
         Loc_ErrorStatus = GPIO_enuInvalidMode;
     }
-    // Check if the GPIO pin speed is valid
     else if (Copy_StrData.GPIO_Speed > GPIO_SPEED_VERY_HIGH )
     {
         Loc_ErrorStatus = GPIO_enuInvalidSpeed;
@@ -75,19 +77,16 @@ GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t Copy_StrData)
         Loc_Temp &= ~(TWO_BITS_CLEAR * Loc_PinNum);
         Loc_Temp |= Loc_PinDirec << Loc_PinNum * TWO_BITS;
         GPIO[Copy_StrData.GPIO_Port]->Moder = Loc_Temp;
-
         // Clear and set the pin mode in Otyper register
         Loc_Temp = GPIO[Copy_StrData.GPIO_Port]->Otyper;
         Loc_Temp &= ~(ONE_BIT_CLEAR * Loc_PinNum);
         Loc_Temp |= Loc_PinMode << Loc_PinNum;
         GPIO[Copy_StrData.GPIO_Port]->Otyper = Loc_Temp;
-
         // Clear and set the pin pull-up/pull-down in Pupdr register
         Loc_Temp = GPIO[Copy_StrData.GPIO_Port]->Pupdr;
         Loc_Temp &= ~(TWO_BITS_CLEAR * Loc_PinNum);
         Loc_Temp |= Loc_PinMode << Loc_PinNum * TWO_BITS;
         GPIO[Copy_StrData.GPIO_Port]->Pupdr = Loc_Temp;
-
         // Clear and set the pin output speed in Ospeedr register
         Loc_Temp = GPIO[Copy_StrData.GPIO_Port]->Ospeedr;
         Loc_Temp &= ~(TWO_BITS_CLEAR * Loc_PinNum);
@@ -95,8 +94,49 @@ GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t Copy_StrData)
         GPIO[Copy_StrData.GPIO_Port]->Ospeedr = Loc_Temp;
     }
 
-    // Return the error status
     return Loc_ErrorStatus;
+}
+GPIO_ErrorStatus_t GPIO_SetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 Copy_PinValue)
+{
+	 u8 Loc_ErrorStatus = GPIO_OK;
+	 u32 Loc_TempReg ;
+	 if (Copy_PortNum > NUM_PORTS - 1 )
+	    {
+	        Loc_ErrorStatus = GPIO_enuInvalidPortNum;
+	    }
+	    // Check if the GPIO pin number is valid
+	    else if (Copy_PinNum> GPIO_PIN_15 )
+	    {
+	        Loc_ErrorStatus = GPIO_enuInvalidPinNum;
+	    }
+	    else
+	    {
+	    	GPIO[Copy_PortNum]->Bsrr |=  1 << Copy_PinNum * (Copy_PinValue+1);
+        }
+  return Loc_ErrorStatus ;
+}
+GPIO_ErrorStatus_t GPIO_GetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 *Add_PinValue)
+{
+	 u8 Loc_ErrorStatus = GPIO_OK;
+		 if (Copy_PortNum > NUM_PORTS - 1 )
+		    {
+		        Loc_ErrorStatus = GPIO_enuInvalidPortNum;
+		    }
+		    // Check if the GPIO pin number is valid
+		    else if (Copy_PinNum> GPIO_PIN_15 )
+		    {
+		        Loc_ErrorStatus = GPIO_enuInvalidPinNum;
+		    }
+		    else if  (Add_PinValue == NULL )
+		    {
+		    	Loc_ErrorStatus = GPIO_enuNullPtr ;
+		    }
+		    else
+		    {
+		    	 u32 Loc_TempReg = GPIO[Copy_PortNum]->Idr ;
+		    	 *Add_PinValue = Loc_TempReg & (1 <<  Copy_PinNum ) ;
+		    }
+		  return Loc_ErrorStatus ;
 }
 
 
