@@ -138,6 +138,3 @@ GPIO_ErrorStatus_t GPIO_GetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 *Add_
 		    }
 		  return Loc_ErrorStatus ;
 }
-
-
-
