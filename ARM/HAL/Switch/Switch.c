@@ -22,6 +22,15 @@ void Switch_Init(void)
 void Switch_GetSwitchState(u32 SwitchName, u32 *Add_SwitchState)
 {
     u32 Loc_State;
+    u32 Loc_Temp = 0 ;
     GPIO_GetPinValue(Switches[SwitchName].Port, Switches[SwitchName].Pin, &Loc_State);
-    *Add_SwitchState = Loc_State ^ Switches[SwitchName].PhysicalState;
+    if(Switches[SwitchName].PhysicalState == GPIO_PULL_UP)
+    {
+      Loc_Temp = 1 ;
+    }
+    else
+    {
+      Loc_Temp = 0 ;
+    }
+    *Add_SwitchState = Loc_State ^ Loc_Temp;
 }
