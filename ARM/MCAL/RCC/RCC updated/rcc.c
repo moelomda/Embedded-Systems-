@@ -9,11 +9,6 @@
   * initialization of the system clock using the High-Speed Internal (HSI) oscillator
   * and the Phase-Locked Loop (PLL). The configured system clock is used as the main
   * clock source for the microcontroller.
-  *
-  * @note
-  *   - Refer to the STM32F401 reference manual and datasheet for detailed information.
-  *
-  ******************************************************************************
   */
 #include "rcc.h"
 /*--------------------------------------------------MASKS---------------------------------------------------------*/
@@ -35,10 +30,8 @@
 #define PLL_N_CLR     0xFFFF803F
 #define PLL_P_CLR     0xFFFCFFFF
 
-
-
 #define RCC_u32BASEADDRESS  0x40023800
-/** @brief Structure representing the RCC peripheral registers. */
+
 typedef struct
 {
     volatile u32 CR;             /*!< RCC clock control register */
@@ -74,7 +67,6 @@ typedef struct
 /* Make the structure point at the base address of RCC */
 #define RCC    ((Rcc_tstrRegisterType* )(RCC_u32BASEADDRESS))
 
-
  Rcc_ErrorStatus_t Rcc_SetClkOnOff(u32 Copy_u32ClkName, u8 Copy_u8ClkState)
  {
 	 u8 loc_u8ErrorStatus = Rcc_enuSucceded ;
@@ -86,8 +78,8 @@ typedef struct
         RCC->CR |=Copy_u32ClkName ;
         break ;
 	 case CLK_OFF:
-		  loc_TempVar = RCC->CFGR ;
-         loc_TempVar &= ~SWS_MASK   ;
+		 loc_TempVar = RCC->CFGR ;
+         loc_TempVar &= ~(SWS_MASK)  ;
          if((Copy_u32ClkName == SYSCLK_HSI && loc_TempVar == SWS_HSI) || (Copy_u32ClkName == SYSCLK_HSE && loc_TempVar == SWS_HSE)
         		 || (Copy_u32ClkName == SYSCLK_PLL && loc_TempVar == SWS_PLL)  )
          {
@@ -95,7 +87,7 @@ typedef struct
          }
          else
          {
-        	 RCC->CR &=~Copy_u32ClkName ;
+        	 RCC->CR &=~(Copy_u32ClkName) ;
          }
 	 }
        return loc_u8ErrorStatus ;
@@ -103,21 +95,11 @@ typedef struct
 
  Rcc_ErrorStatus_t Rcc_SetSysClk(u32 Copy_u32ClkName)
  {
-
-	 // Initialize error status to success
 	     u8 loc_u8ErrorStatus = Rcc_enuSucceded;
-
-	     // Initialize timeout counter
 	     u32 loc_u32Timeout = 0;
-
-	     // Read the current value of the RCC CR register
 	     u32 loc_u32temp = RCC->CR;
-
-	     // Flag indicating if the specified clock is ready
 	     u32 loc_u32Rdyflagraised = 0;
-
-         u32  Loc_u32Rdyflag = 0 ;
-
+	     u32  Loc_u32Rdyflag = 0 ;
          u32 Loc_u8ClkSet = 0 ;
 
          if (Copy_u32ClkName == SYSCLK_HSI)
@@ -143,51 +125,38 @@ typedef struct
          }
          while (loc_u32Rdyflagraised != 1 && loc_u32Timeout < 1000)
         	         {
-        	             // Increment timeout counter
         	             loc_u32Timeout++;
-
-        	             // Read the value of the RCC CR register
         	             loc_u32temp = RCC->CR;
-
-        	             // Mask out the HSI RDY flag
         	             loc_u32temp &= Loc_u32Rdyflag ;
-
-        	             // Check if HSI is ready
         	             if (loc_u32temp == Loc_u32Rdyflag)
         	             {
-        	                 loc_u32Rdyflagraised = 1;  // Set ready flag
+        	                 loc_u32Rdyflagraised = 1;
         	             }
-        	             // Check if timeout occurred
         	             else if (loc_u32Timeout == 1000)
         	             {
         	                 loc_u8ErrorStatus = Rcc_enuCLkNotReady;  // Set error status
         	             }
         	         }
 
-        	         // If clock is ready, proceed to set it as system clock
         	         if (loc_u8ErrorStatus != Rcc_enuCLkNotReady)
         	         {
-        	             // Read current configuration and mask out SW bits
+
         	             loc_u32temp = RCC->CFGR;
         	             loc_u32temp &= SW_CLEAR;
         	             loc_u32temp |= Loc_u8ClkSet;
 
-        	             // Update CFGR register to set specified clock as system clock
         	             RCC->CFGR = loc_u32temp;
         	         }
-	     // Return error status
+
 	     return loc_u8ErrorStatus;
  }
-
  Rcc_ErrorStatus_t Rcc_SetPeripheralOnOff(u32 Copy_u32Name , u8 Copy_u8State )
  {
-
 	 u8 loc_u8ErrorStatus = Rcc_enuSucceded;
 
 	 u16 loc_u16ConditionAhp1 = (Copy_u32Name == DMA1 || Copy_u32Name == DMA2 || Copy_u32Name == DMA1 || Copy_u32Name == GPIO_A ||
 			 Copy_u32Name == GPIO_B  || Copy_u32Name == GPIO_C || Copy_u32Name == GPIO_D || Copy_u32Name == GPIO_E ||
 			 Copy_u32Name == GPIO_H);
-
 	 u8 loc_u16ConditionAhp2 = (Copy_u32Name == USB_OTG);
 
 	 u16 loc_u16ConditionAbp1 = (Copy_u32Name == PW_INTF || Copy_u32Name == I2C_1 || Copy_u32Name == I2C_2 || Copy_u32Name == I2C_3 ||
@@ -198,10 +167,8 @@ typedef struct
 			 Copy_u32Name == SPI_4  || Copy_u32Name == SYS_CFGCTRL || Copy_u32Name ==  ADC1 || Copy_u32Name == USART1 ||
 			 Copy_u32Name == USART6 || Copy_u32Name == TIM1 );
 
-
       switch (Copy_u8State)
       {
-
       case CLK_ON :
     	  if(loc_u16ConditionAhp1)
     	  {
@@ -247,12 +214,10 @@ typedef struct
          	  }
                 break ;
       }
-
       return loc_u8ErrorStatus ;
-
  }
 
- Rcc_ErrorStatus_t Rcc_SetPreScaler(u8 Copy_u32Name , u8 Copy_u8Value)
+ Rcc_ErrorStatus_t Rcc_SetPreScaler(u32 Copy_u32Name , u32 Copy_u8Value)
  {
 	u8 loc_u8ErrorStatus =  Rcc_enuSucceded;
 	u32 loc_u32Temp = RCC->CFGR ;
@@ -283,7 +248,6 @@ typedef struct
      {
     	 loc_u8ErrorStatus =  Rcc_enuInvalidClkName;
      }
-
        loc_u32Temp = RCC-> PLLCFGR ;
        loc_u32Temp &= PLL_SRC_CLR ;
        loc_u32Temp |=loc_clksrc;
@@ -294,7 +258,5 @@ typedef struct
        loc_u32Temp &= PLL_P_CLR ;
        loc_u32Temp |=CopyPValue;
        RCC-> PLLCFGR =loc_u32Temp ;
-
-
       return loc_u8ErrorStatus ;
 }

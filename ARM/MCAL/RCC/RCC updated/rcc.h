@@ -554,7 +554,7 @@ Rcc_ErrorStatus_t Rcc_SetPeripheralOnOff(u32 Copy_u32Name , u8 Copy_u8State );
   ******************************************************************************
   */
 
-Rcc_ErrorStatus_t Rcc_SetPreScaler(u8 Copy_u8Name , u8 Copy_u8Value);
+Rcc_ErrorStatus_t Rcc_SetPreScaler(u32 Copy_u8Name , u32 Copy_u8Value);
 /**
   ******************************************************************************
   * @brief  Adjusts the PLL configuration
