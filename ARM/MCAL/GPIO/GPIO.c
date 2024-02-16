@@ -138,7 +138,7 @@ GPIO_ErrorStatus_t GPIO_GetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 *Add_
 		    else
 		    {
 		          u32 Loc_TempReg = GPIO[Copy_PortNum]->Idr ;
-		    	 *Add_PinValue = Loc_TempReg & (1 <<  Copy_PinNum ) ;
+		    	 *Add_PinValue = (Loc_TempReg & (1 <<  Copy_PinNum ))>> Copy_PinNum;
 		    }
 		  return Loc_ErrorStatus ;
 }
