@@ -42,10 +42,10 @@
 #define GPIO_PIN_14  14  // Pin 14
 #define GPIO_PIN_15  15  // Pin 15
 /*--------------------------------------------------------*Pin Modes*---------------------------------------------------------------*/
-#define GPIO_MODE_INPUT      0x00  // Input (reset state)
-#define GPIO_MODE_OUTPUT     0x01  // General purpose output mode
-#define GPIO_MODE_AF         0x02  // Alternate function mode
-#define GPIO_MODE_ANALOG     0x03  // Analog mode
+#define GPIO_INPUT      0x0  // Input (reset state)
+#define GPIO_OUTPUT     0x1  // General purpose output mode
+#define GPIO_AF_M       0x2  // Alternate function mode
+#define GPIO_ANALOG     0x3  // Analog mode
 /*--------------------------------------------------------*Output Type*--------------------------------------------------------------*/
 #define GPIO_OTYPE_PUSHPULL    0x0 // Output push-pull (reset state)
 #define GPIO_OTYPE_OPENDRAIN   0x1  // Output open-drain
@@ -108,7 +108,7 @@ typedef enum
   * @param  Copy_StrData: Structure containing the GPIO pin configuration.
   * @retval GPIO_ErrorStatus_t: Indicates the status of the GPIO initialization.
   */
-GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t Copy_StrData);
+GPIO_ErrorStatus_t GPIO_Init(GpioPinCfg_t  *Copy_StrData);
 
 /**
   * @brief  Sets the value of a GPIO pin.
@@ -129,6 +129,4 @@ GPIO_ErrorStatus_t GPIO_SetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 Copy_
   *
   */
 GPIO_ErrorStatus_t GPIO_GetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 *Add_PinValue);
-
-
 #endif /* GPIO_H_ */
