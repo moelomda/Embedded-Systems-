@@ -115,7 +115,7 @@ GPIO_ErrorStatus_t GPIO_SetPinValue(u32 Copy_PortNum, u32 Copy_PinNum, u32 Copy_
 	    	}
 	    	else
 	    	{
-	        GPIO[Copy_PortNum]->Bsrr |=  1 << (Copy_PinNum*2);
+	        GPIO[Copy_PortNum]->Bsrr |=  1 << (Copy_PinNum+16);
 	    	}
         }
   return Loc_ErrorStatus ;
