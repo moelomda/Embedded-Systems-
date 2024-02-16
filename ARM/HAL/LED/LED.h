@@ -20,7 +20,7 @@
 #include "std_types.h"
 #include "LED_Cfg.h"
 #include "GPIO.h"
-#define LED_FORWARD   0
+#define LED_FORWARD  0
 #define LED_REVERSE  1
 #define LED_ON       1
 #define LED_OFF      0
@@ -62,7 +62,7 @@ void LED_Init(void);
  * @param   Led_State: The status to set for the LED (0 for OFF, 1 for ON).
  * @return  None
  */
-void LED_SetState (u32 Led_Name , u32 Led_State);
+void LED_SetLedState (u32 Led_Name , u32 Led_State);
 
 #endif /* LED_H_ */
 

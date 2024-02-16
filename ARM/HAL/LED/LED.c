@@ -1,26 +1,8 @@
-/**
-  ******************************************************************************
-  * @file    LED.c
-  * @brief   Source file for LED module.
-  ******************************************************************************
-  * @attention
-  *
-  * This file implements the functions declared in LED.h. It provides the
-  * functionality for initializing and controlling LEDs connected to the
-  * microcontroller.
-  *
-  * @note
-  *   - Make sure to include "LED.h" in your project to use these functions.
-  ******************************************************************************
-  */
-
 #include "LED.h"
 #include "GPIO.h"
-
 extern const ledcfg_t Leds[_led_num];
 void LED_Init(void)
 {
-
 GpioPinCfg_t Led_Cfg ;
 u8 Loc_Iterator ;
 Led_Cfg.GPIO_Direction = GPIO_OUTPUT ;
@@ -33,9 +15,8 @@ for(Loc_Iterator =0; Loc_Iterator <_led_num; Loc_Iterator ++)
 	GPIO_Init(&Led_Cfg);
 	GPIO_SetPinValue(Leds[Loc_Iterator].Port ,Leds[Loc_Iterator].Pin , Leds[Loc_Iterator].defaultstate ^ Leds[Loc_Iterator].Connection);
 }
-
 }
-void LED_SetState (u32 Led_Name , u32 Led_State)
+void LED_SetLedState (u32 Led_Name , u32 Led_State)
 {
-	GPIO_SetPinValue(Leds[Led_Name].Port ,Leds[Led_Name].Pin , Led_State ^ Leds[Led_Name].Connection);
+	GPIO_SetPinValue(Leds[Led_Name].Port ,Leds[Led_Name].Pin , (Led_State) ^ (Leds[Led_Name].Connection));
 }
